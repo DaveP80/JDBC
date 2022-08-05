@@ -64,7 +64,7 @@ public class ConnectionUtil {
                 String privatebalances = result.getString("balance");
                 String socialsecurity = result.getString("social_security");
 
-                System.out.printf("%d -ss %s -bal %s\n", id, privatebalances, socialsecurity);
+                System.out.printf("%d -bal %s -ss %s\n", id, privatebalances, socialsecurity);
 
             }
         } catch (Exception e) {

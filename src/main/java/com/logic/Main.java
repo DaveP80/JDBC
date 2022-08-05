@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) throws SQLException, InterruptedException {
         ConnectionUtil db = new ConnectionUtil();
 
-        Connection conn = db.connect_to_db("postgres", "postgres", "4alfonso4");
+        Connection conn = db.connect_to_db("postgres", "postgres", "*****");
         db.createTable(conn, "recovery");
 
         while (true) {

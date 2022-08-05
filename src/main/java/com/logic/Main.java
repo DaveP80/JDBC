@@ -2,16 +2,54 @@ package com.logic;
 import util.ConnectionUtil;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
 
-    static Scanner scan = new Scanner(System.in);
+    static Scanner input = new Scanner(System.in);
+
+
     //connect to postgres
-    public static void main(String[] args) {
-        ConnectionUtil db=new ConnectionUtil();
-        Connection conn=db.connect_to_db("postgres","postgres", "4alfonso4");
+    public static void main(String[] args) throws SQLException, InterruptedException {
+        ConnectionUtil db = new ConnectionUtil();
+
+        Connection conn = db.connect_to_db("postgres", "postgres", "4alfonso4");
         db.createTable(conn, "recovery");
 
+        while (true) {
+
+            while (!input.hasNextInt()) { //please enter your social security number
+                input.nextLine();
+            }
+                int socials = input.nextInt();
+            if (socials==1) {
+                break;
+            }
+                System.out.println("Please enter the balance your will transfer");
+
+                while (!input.hasNextDouble()) {
+                    input.nextLine();
+                }
+                double transfer = input.nextDouble();
+                db.insert_row(conn, socials, transfer);
+                System.out.println();
+                System.out.println("would you like like to continue entering data");
+                System.out.println("Yes(1)/No(2)");
+                while (!input.hasNextInt()) {
+                    input.nextLine();
+                }
+                if (input.nextInt() == 2) {
+                    db.balance(conn, "recovery");
+                    System.out.println("would you like to delete an entry");
+                    if
+                    Thread.sleep(5000);
+                    break;
+                } else
+                    System.out.println("Please enter another social security number **1 to exit program");
+
+        }
+        }
     }
-}
+
+

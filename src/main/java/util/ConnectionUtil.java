@@ -1,8 +1,7 @@
 package util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import javax.swing.plaf.nimbus.State;
+import java.sql.*;
 
 
 public class ConnectionUtil {
@@ -24,18 +23,53 @@ public class ConnectionUtil {
         }
         return conn;
     }
+
     public void createTable(Connection conn, String recovery) {
 
         Statement statement;
         try {
-            String query="create table "+recovery+"(id SERIAL PRIMARY KEY NOT NULL, balance numeric(10, 2) default 0, social_security int4 NOT NULL UNIQUE);";
-                statement = conn.createStatement();
-                statement.executeUpdate(query);
-                System.out.println("table created");
+            String query = "create table " + recovery + "(id SERIAL PRIMARY KEY NOT NULL, balance numeric(10, 2) default 0, social_security int4 NOT NULL UNIQUE);";
+            statement = conn.createStatement();
+            statement.executeUpdate(query);
+            System.out.println("please enter your social security number");
 
-        }catch (Exception e) {
+        } catch (Exception e) {
+            System.out.println("entering db information");
+            System.out.println("please enter your social security number **1 to exit program**");
+        }
+    }
+
+    public void insert_row(Connection conn, int socials, double transfer) {
+        Statement statement;
+        try {
+            String query = "INSERT INTO recovery(balance, social_security) VALUES (" + transfer + "," + socials + ");";
+            statement = conn.createStatement();
+            statement.executeUpdate(query);
+            System.out.println("row inserted");
+
+        } catch (Exception e) {
             System.out.println(e);
+        }
+    }
 
+    public void balance(Connection conn, String recovery) throws SQLException {
+        Statement statement;
+        try {
+            String query = "SELECT * FROM " + recovery + ";";
+            statement = conn.createStatement();
+
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                int id = result.getInt("id");
+                String privatebalances = result.getString("balance");
+                String socialsecurity = result.getString("social_security");
+
+                System.out.printf("%d -ss %s -bal %s\n", id, privatebalances, socialsecurity);
+
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 }

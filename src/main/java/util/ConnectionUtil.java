@@ -72,4 +72,18 @@ public class ConnectionUtil {
             System.out.println(e);
         }
     }
-}
+        public void delete(Connection conn, int idm) {
+            Statement statement;
+            try {
+                String query = "DELETE FROM RECOVERY WHERE id="+idm+";";
+                statement = conn.createStatement();
+                statement.executeUpdate(query);
+                System.out.println("account with id " +idm+" deleted" + "\n");
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
+    }
+
+
